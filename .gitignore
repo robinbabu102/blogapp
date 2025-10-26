@@ -1,0 +1,28 @@
+# Build / Maven
+target/
+*.jar
+*.war
+.mvn/wrapper/maven-wrapper.jar
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment / sensitive configs
+application.properties
+application.yml
+
+# Ignore IDE/workspace files
+backend/.metadata/
+backend/.sonarlint/
