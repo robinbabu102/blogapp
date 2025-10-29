@@ -29,6 +29,7 @@ public class PostService {
         Post post = Post.builder()
                 .title(dto.getTitle())
                 .content(dto.getContent())
+                
                 .author(author)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
@@ -81,9 +82,25 @@ public class PostService {
         dto.setId(post.getId());
         dto.setTitle(post.getTitle());
         dto.setContent(post.getContent());
+        dto.setAuthorId(post.getAuthor().getId());
         dto.setAuthorName(post.getAuthor().getName());
         dto.setCreatedAt(post.getCreatedAt());
         dto.setUpdatedAt(post.getUpdatedAt());
         return dto;
     }
+    
+    public Page<PostResponseDto> searchPosts(String keyword, int page, int size) {
+        Page<Post> posts = postRepository.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(
+                keyword, keyword, PageRequest.of(page, size)
+        );
+        return posts.map(this::mapToDto);
+    }
+    
+    
+    public Page<PostResponseDto> getPostsByAuthor(Long authorId, int page, int size) {
+        Page<Post> posts = postRepository.findByAuthorId(authorId, PageRequest.of(page, size));
+        return posts.map(this::mapToDto);
+    }
+
+
 }

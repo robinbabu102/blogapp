@@ -28,6 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
+		<spring-ai.version>1.0.3</spring-ai.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -66,7 +67,24 @@
     
 </dependency>
 
+<dependency>
+    <groupId>org.springframework.ai</groupId>
+    <artifactId>spring-ai-starter-model-ollama</artifactId>
+  </dependency>
+
 	</dependencies>
+	
+	<dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.ai</groupId>
+      <artifactId>spring-ai-bom</artifactId>
+      <version>1.0.0</version> <!-- check docs for current -->
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+  </dependencies>
+</dependencyManagement>
 
 	<build>
 		<plugins>

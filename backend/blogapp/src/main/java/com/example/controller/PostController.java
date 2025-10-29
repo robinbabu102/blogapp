@@ -71,4 +71,27 @@ public class PostController {
         postService.deletePost(id, user.getId());
         return ResponseEntity.ok("Post deleted successfully");
     }
+    
+    @GetMapping("/search")
+    public ResponseEntity<Page<PostResponseDto>> searchPosts(
+            @RequestParam String keyword,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int size) {
+
+        return ResponseEntity.ok(postService.searchPosts(keyword, page, size));
+    }
+
+    @GetMapping("/my-posts")
+    public ResponseEntity<?> getMyPosts(HttpSession session,
+                                        @RequestParam(defaultValue = "0") int page,
+                                        @RequestParam(defaultValue = "5") int size) {
+        UserResponseDto user = (UserResponseDto) session.getAttribute("user");
+        if (user == null) {
+            return ResponseEntity.status(401).body("You must be logged in to view your posts");
+        }
+
+        return ResponseEntity.ok(postService.getPostsByAuthor(user.getId(), page, size));
+    }
+
+
 }

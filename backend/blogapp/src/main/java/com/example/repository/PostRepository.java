@@ -9,7 +9,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.entity.Post;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
-    List<Post> findByAuthorId(Long authorId);
+	Page<Post> findByAuthorId(Long authorId, Pageable pageable);
     Page<Post> findAll(Pageable pageable);
+    // Search by title or content (case-insensitive)
+    Page<Post> findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(
+            String titleKeyword,
+            String contentKeyword,
+            Pageable pageable);
+
 
 }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import api from "../services/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -13,21 +13,75 @@ function Login() {
     try {
       const res = await api.post("/auth/login", form);
       localStorage.setItem("user", JSON.stringify(res.data));
-      alert("Login successful!");
-      navigate("/");
+      setTimeout(() => {
+        alert("Login successful!");
+        navigate("/");
+      }, 100);
     } catch (err) {
       alert(err.response?.data?.message || "Login failed");
     }
   };
 
   return (
-    <div className="container mt-4">
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input className="form-control mb-2" name="email" placeholder="Email" onChange={handleChange} />
-        <input className="form-control mb-2" name="password" type="password" placeholder="Password" onChange={handleChange} />
-        <button className="btn btn-success w-100">Login</button>
-      </form>
+    // Centering the form on the page using Bootstrap classes
+    <div className="container-fluid d-flex justify-content-center align-items-center" style={{ minHeight: '100vh', backgroundColor: '#f8f9fa' }}>
+      {/* Card for the login form with responsive sizing */}
+      <div className="card shadow-lg p-4" style={{ maxWidth: '450px', width: '100%' }}>
+        <div className="card-body">
+          <h2 className="card-title text-center mb-4">
+            <i className="bi bi-person-circle me-2"></i>Log In
+          </h2>
+          <form onSubmit={handleSubmit}>
+            
+            {/* Email Input Group */}
+            <div className="mb-3">
+              <label htmlFor="emailInput" className="form-label">Email</label>
+              <div className="input-group">
+                <span className="input-group-text"><i className="bi bi-envelope"></i></span>
+                <input
+                  id="emailInput"
+                  name="email"
+                  type="email"
+                  className="form-control" // Bootstrap form control class
+                  placeholder="Email address"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
+
+            {/* Password Input Group */}
+            <div className="mb-4">
+              <label htmlFor="passwordInput" className="form-label">Password</label>
+              <div className="input-group">
+                <span className="input-group-text"><i className="bi bi-lock"></i></span>
+                <input
+                  id="passwordInput"
+                  name="password"
+                  type="password"
+                  className="form-control" // Bootstrap form control class
+                  placeholder="Password"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <button type="submit" className="btn btn-primary w-100 mb-3">
+              Log In
+            </button>
+
+            {/* Sign Up Link */}
+            <p className="text-center mt-3">
+              Don't have an account?{" "}
+              <Link to="/signup" className="text-decoration-none">
+                Sign up here
+              </Link>
+            </p>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }

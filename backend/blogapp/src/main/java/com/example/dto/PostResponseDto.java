@@ -10,6 +10,7 @@ public class PostResponseDto {
     private String title;
     private String content;
     private String authorName;
+    private Long authorId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
