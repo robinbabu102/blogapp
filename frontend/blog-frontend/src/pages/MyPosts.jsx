@@ -12,6 +12,7 @@ function MyPosts() {
   const fetchMyPosts = async (pageNumber = 0) => {
     setLoading(true);
     try {
+      // Assuming the API endpoint for fetching current user's posts is /posts/my-posts
       const res = await api.get(`/posts/my-posts?page=${pageNumber}&size=6`);
       setMyPosts(res.data.content);
       setTotalPages(res.data.totalPages);
@@ -32,7 +33,8 @@ function MyPosts() {
   
 
   return (
-    <div className="container py-5">
+    // FIX 1: Using container-fluid for 100% width. Added minHeight for full page height.
+    <div className="container-fluid py-5 px-4" style={{ minHeight: '100vh' }}> 
       <h2 className="text-center mb-4 text-primary fw-bold">
         <i className="bi bi-person-lines-fill me-2"></i> My Posts
       </h2>
@@ -44,7 +46,8 @@ function MyPosts() {
           </div>
         </div>
       ) : myPosts.length === 0 ? (
-        <div className="alert alert-info text-center">
+        // Centering the alert content
+        <div className="alert alert-info text-center mx-auto" style={{maxWidth: '600px'}}>
           <i className="bi bi-emoji-frown me-2"></i>
           You haven’t written any posts yet.
           <br />
@@ -53,15 +56,19 @@ function MyPosts() {
           </Link>
         </div>
       ) : (
-        <div className="row g-4">
+        // FIX 2 & 3: justify-content-center centers the row, and modified column sizes (col-lg-5, col-xl-4)
+        // ensure wider cards when fewer posts exist (solving the half-screen blank space).
+        <div className="row g-4 justify-content-center">
           {myPosts.map((blog) => (
-            <div key={blog.id} className="col-md-6 col-lg-4">
+            // Card sizing adjusted for better distribution: 12 wide on mobile, 6 on medium, 5 on large, 4 on extra large
+            <div key={blog.id} className="col-12 col-md-6 col-lg-5 col-xl-4"> 
               <BlogCard blog={blog} />
             </div>
           ))}
         </div>
       )}
 
+      {/* Pagination control centered at the bottom */}
       <div className="d-flex justify-content-center align-items-center gap-3 mt-5">
         <button
           onClick={() => fetchMyPosts(page - 1)}

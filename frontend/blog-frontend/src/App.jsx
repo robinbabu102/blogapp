@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
@@ -9,12 +10,26 @@ import BlogEdit from "./pages/BlogEdit";
 import MyPosts from "./pages/MyPosts";
 
 function App() {
+  const [currentUser, setCurrentUser] = useState(() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const storedUser = localStorage.getItem("user");
+      setCurrentUser(storedUser ? JSON.parse(storedUser) : null);
+    };
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
   return (
     <Router>
-      <Navbar />
+      <Navbar currentUser={currentUser} setCurrentUser={setCurrentUser} />
       <Routes>
-        <Route path="/" element={<BlogList />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<BlogList currentUser={currentUser} />} />
+        <Route path="/login" element={<Login setCurrentUser={setCurrentUser} />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/create" element={<BlogCreate />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
@@ -26,4 +41,3 @@ function App() {
 }
 
 export default App;
-  

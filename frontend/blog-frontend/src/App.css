@@ -1,13 +1,16 @@
+/* app.css */
 /* #root {
   max-width: 1280px; 
   margin: 0 auto; 
   text-align: left; 
-} */
+} 
+*/
 
 @media (min-width: 992px) {
-  #root {
+  /* #root {
     max-width: 1440px;
   }
+  */
 }
 
 .logo {
@@ -38,11 +41,7 @@
   }
 }
 
-
-
-
 /* additional css */
-
 
 body {
     font-family: 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -57,8 +56,6 @@ body {
     transform: translateY(-5px);
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
 }
-
-
 
 .card {
   border-radius: 12px;
@@ -114,19 +111,6 @@ body {
   animation: fadeIn 0.5s ease-out;
 }
 
-body {
-    font-family: 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f8f9fa;
-}
-
-.blog-card-hover {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid #dee2e6; 
-}
-.blog-card-hover:hover {
-    transform: translateY(-5px); 
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important; 
-}
 
 .lead {
     font-size: 1.15rem;
